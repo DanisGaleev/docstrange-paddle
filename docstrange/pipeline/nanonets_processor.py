@@ -46,6 +46,8 @@ class NanonetsDocumentProcessor:
                 "nanonets/Nanonets-OCR2-3B",
 
             )
+            print("nanonets/Nanonets-OCR2-3B")
+            print("Model name_or_path:", self.model.config.name_or_path)
 
             logger.info("Nanonets OCR model loaded successfully from local cache nanonets/Nanonets-OCR2-3B")
 
@@ -93,6 +95,7 @@ class NanonetsDocumentProcessor:
                     {"type": "text", "text": prompt},
                 ]},
             ]
+            pr
             text = self.processor.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
             inputs = self.processor(text=[text], images=[image], padding=True, return_tensors="pt")
             inputs = inputs.to(self.model.device)

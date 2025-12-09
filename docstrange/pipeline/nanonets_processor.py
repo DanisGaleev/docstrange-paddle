@@ -25,6 +25,8 @@ class NanonetsDocumentProcessor:
     def _initialize_models(self, cache_dir: Optional[Path] = None):
         """Initialize Nanonets OCR model from local cache."""
         try:
+
+            print("333B")
             from transformers import AutoTokenizer, AutoProcessor, AutoModelForImageTextToText
             self.model = AutoModelForImageTextToText.from_pretrained(
                 "nanonets/Nanonets-OCR2-3B",

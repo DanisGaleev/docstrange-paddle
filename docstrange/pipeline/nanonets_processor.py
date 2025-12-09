@@ -26,36 +26,11 @@ class NanonetsDocumentProcessor:
         """Initialize Nanonets OCR model from local cache."""
         try:
             from transformers import AutoTokenizer, AutoProcessor, AutoModelForImageTextToText
-            from .model_downloader import ModelDownloader
-
-            # Get model downloader instance
-            model_downloader = ModelDownloader(cache_dir)
-
-            # Get the path to the locally cached Nanonets model
-            model_path = model_downloader.get_model_path('nanonets-ocr')
-
-            if model_path is None:
-                raise RuntimeError(
-                    "Failed to download Nanonets OCR model. "
-                    "Please ensure you have sufficient disk space and internet connection."
-                )
-
-            # The actual model files are in a subdirectory with the same name
-            actual_model_path = model_path / "Nanonets-OCR-ss"
-
-            if not actual_model_path.exists():
-                raise RuntimeError(
-                    f"Model files not found at expected path: {actual_model_path}"
-                )
-
-            logger.info(f"Loading Nanonets OCR model from local cache: {actual_model_path}")
-
-            # Load model from local path
             self.model = AutoModelForImageTextToText.from_pretrained(
                 "nanonets/Nanonets-OCR2-3B",
                 dtype=torch.bfloat16,
                 device_map="auto",
-                attn_implementation="sdpa",  # or "eager"
+                attn_implementation="sdpa",# or "eager"
             )
             self.model.eval()
 
@@ -114,7 +89,6 @@ class NanonetsDocumentProcessor:
                     {"type": "text", "text": prompt},
                 ]},
             ]
-
             text = self.processor.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
             inputs = self.processor(text=[text], images=[image], padding=True, return_tensors="pt")
             inputs = inputs.to(self.model.device)

@@ -31,7 +31,6 @@ class NanonetsDocumentProcessor:
                 dtype=torch.bfloat16,
                 device_map="auto",
                 attn_implementation="sdpa",# or "eager"
-                local_files_only=True
             )
             self.model.eval()
 
@@ -39,12 +38,10 @@ class NanonetsDocumentProcessor:
 
             self.tokenizer = AutoTokenizer.from_pretrained(
                 "nanonets/Nanonets-OCR2-3B",
-                local_files_only=True
 
             )
             self.processor = AutoProcessor.from_pretrained(
                 "nanonets/Nanonets-OCR2-3B",
-                local_files_only=True
 
             )
 

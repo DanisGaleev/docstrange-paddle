@@ -62,15 +62,13 @@ class NanonetsDocumentProcessor:
             self.model = torch.compile(self.model)
 
             self.tokenizer = AutoTokenizer.from_pretrained(
-                str(actual_model_path),
-                local_files_only=True
+                "nanonets/Nanonets-OCR2-3B",
             )
             self.processor = AutoProcessor.from_pretrained(
-                str(actual_model_path),
-                local_files_only=True
+                "nanonets/Nanonets-OCR2-3B",
             )
 
-            logger.info("Nanonets OCR model loaded successfully from local cache")
+            logger.info("Nanonets OCR model loaded successfully from local cache nanonets/Nanonets-OCR2-3B")
 
         except ImportError as e:
             logger.error(f"Transformers library not available: {e}")

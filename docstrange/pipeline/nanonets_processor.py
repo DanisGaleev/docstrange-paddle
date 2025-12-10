@@ -84,11 +84,11 @@ class NanonetsDocumentProcessor:
     def _extract_text_with_nanonets(self, image_path: str, max_new_tokens: int = 4096) -> str:
         """Extract text using Nanonets OCR model."""
         try:
-            prompt = """Извлеките текст из приведённого выше документа так, как если бы вы читали его естественно. Возвращайте таблицы в формате HTML. Возвращайте уравнения в представлении LaTeX. Если в документе есть изображение и подпись к изображению отсутствует, добавьте небольшое описание изображения внутри тега <img></img>; в противном случае поместите подпись к изображению внутри <img></img>. Водяные знаки должны быть заключены в скобки. Например: <watermark>OFFICIAL COPY</watermark>. Номера страниц должны быть заключены в скобки. Например: <page_number>14</page_number> или <page_number>9/22</page_number>. Для флажков предпочтительно использовать ☐ и ☑️."""
+            prompt = """Extract the text from the above document as if you were reading it naturally. Return the tables in html format. Return the equations in LaTeX representation. If there is an image in the document and image caption is not present, add a small description of the image inside the <img></img> tag; otherwise, add the image caption inside <img></img>. Watermarks should be wrapped in brackets. Ex: <watermark>OFFICIAL COPY</watermark>. Page numbers should be wrapped in brackets. Ex: <page_number>14</page_number> or <page_number>9/22</page_number>. Prefer using ☐ and ☑ for check boxes."""
 
             image = Image.open(image_path)
             messages = [
-                {"role": "system", "content": "Ты полезный ассистент."},
+                {"role": "system", "content": "You are a helpful assistant."},
                 {"role": "user", "content": [
                     {"type": "image", "image": f"file://{image_path}"},
                     {"type": "text", "text": prompt},
